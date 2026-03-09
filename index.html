@@ -15,19 +15,31 @@ align-items:center;
 background:linear-gradient(135deg,#E6E6FA,#D8BFD8);
 font-family:tahoma;
 overflow:hidden;
+padding:10px;
 }
 
 .container{
-background:rgba(255,255,255,0.8);
+background:rgba(255,255,255,0.85);
 padding:30px;
 border-radius:25px;
 text-align:center;
-width:300px;
+width:90%;
+max-width:340px;
 position:relative;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
 }
 
 .page{display:none;}
 .active{display:block;}
+
+input{
+padding:10px;
+border-radius:15px;
+border:1px solid #ccc;
+width:80%;
+text-align:center;
+font-size:16px;
+}
 
 button{
 background:#9370DB;
@@ -37,6 +49,7 @@ padding:12px 25px;
 border-radius:50px;
 cursor:pointer;
 margin-top:10px;
+font-size:15px;
 }
 
 #run-btn{
@@ -52,7 +65,7 @@ color:#FF69B4;
 .heart{
 position:fixed;
 color:#ff4d6d;
-font-size:20px;
+font-size:22px;
 animation:floatUp 3s linear forwards;
 }
 
@@ -67,7 +80,6 @@ position:fixed;
 width:6px;
 height:6px;
 border-radius:50%;
-background:red;
 animation:explode 1s ease-out forwards;
 }
 
@@ -113,6 +125,7 @@ ontouchstart="moveButton()">ไม่เป็น</button>
 <script>
 
 function goToPage(n){
+
 const name=document.getElementById("nameInput").value;
 
 if(n===2 && name.trim()===""){
@@ -124,12 +137,16 @@ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 
 document.getElementById("page"+n).classList.add("active");
 
+/* แสดงชื่อ */
+if(n===2){
+document.getElementById("greeting").innerText="ดีค้าบ "+name+" ✨";
+}
+
 }
 
 function moveButton(){
 
 const btn=document.getElementById("run-btn");
-
 const box=document.getElementById("main-box");
 
 const maxX=box.clientWidth-btn.clientWidth;
@@ -137,6 +154,7 @@ const maxY=box.clientHeight-btn.clientHeight;
 
 btn.style.left=Math.random()*maxX+"px";
 btn.style.top=Math.random()*maxY+"px";
+
 }
 
 function loveAction(){
@@ -144,10 +162,9 @@ function loveAction(){
 goToPage(3);
 
 startHearts();
-
 startFireworks();
-
 showLoveMessage();
+
 }
 
 /* ❤️ หัวใจลอย */
@@ -158,11 +175,9 @@ setInterval(()=>{
 const heart=document.createElement("div");
 
 heart.className="heart";
-
 heart.innerHTML="❤️";
 
 heart.style.left=Math.random()*window.innerWidth+"px";
-
 heart.style.top=window.innerHeight+"px";
 
 document.body.appendChild(heart);
@@ -174,7 +189,6 @@ setTimeout(()=>heart.remove(),3000);
 }
 
 /* 🎆 fireworks */
-
 function startFireworks(){
 
 for(let i=0;i<30;i++){
@@ -184,7 +198,6 @@ const f=document.createElement("div");
 f.className="firework";
 
 f.style.left=Math.random()*window.innerWidth+"px";
-
 f.style.top=Math.random()*window.innerHeight+"px";
 
 f.style.background="hsl("+Math.random()*360+",100%,50%)";
@@ -198,7 +211,6 @@ setTimeout(()=>f.remove(),1000);
 }
 
 /* 💌 ข้อความรัก */
-
 function showLoveMessage(){
 
 setTimeout(()=>{
