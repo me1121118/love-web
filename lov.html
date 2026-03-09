@@ -1,150 +1,218 @@
 <!DOCTYPE html>
 <html lang="th">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Special Message</title>
-    <style>
-        body {
-            margin: 0;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(135deg, #E6E6FA 0%, #D8BFD8 100%);
-            font-family: 'Tahoma', sans-serif;
-            color: #6A5ACD;
-            overflow: hidden; /* กันหน้าจอส่ายไปมาเวลาปุ่มหนี */
-            touch-action: manipulation;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Special Message</title>
 
-        .container {
-            background: rgba(255, 255, 255, 0.7);
-            padding: 2rem;
-            border-radius: 25px;
-            backdrop-filter: blur(10px);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
-            text-align: center;
-            width: 85%;
-            max-width: 300px;
-            min-height: 300px;
-            border: 2px solid white;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-        }
+<style>
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:linear-gradient(135deg,#E6E6FA,#D8BFD8);
+font-family:tahoma;
+overflow:hidden;
+}
 
-        .page { display: none; }
-        .active { display: block; animation: fadeIn 0.4s ease-out; }
+.container{
+background:rgba(255,255,255,0.8);
+padding:30px;
+border-radius:25px;
+text-align:center;
+width:300px;
+position:relative;
+}
 
-        input {
-            padding: 12px;
-            border-radius: 12px;
-            border: 2px solid #D8BFD8;
-            margin-top: 10px;
-            width: 90%;
-            font-size: 16px; /* กัน iPhone ซูมหน้าจอเวลาพิมพ์ */
-            outline: none;
-        }
+.page{display:none;}
+.active{display:block;}
 
-        .btn-group {
-            margin-top: 30px;
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            align-items: center;
-        }
+button{
+background:#9370DB;
+color:white;
+border:none;
+padding:12px 25px;
+border-radius:50px;
+cursor:pointer;
+margin-top:10px;
+}
 
-        button {
-            background-color: #9370DB;
-            color: white;
-            border: none;
-            padding: 15px 30px;
-            border-radius: 50px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
-        }
+#run-btn{
+position:absolute;
+background:#ffb6c1;
+}
 
-        /* ปุ่มหนี (ปรับให้รองรับมือถือ) */
-        #run-btn {
-            position: absolute;
-            background-color: #ffb6c1;
-            width: auto;
-            padding: 10px 20px;
-            font-size: 0.9rem;
-            white-space: nowrap;
-            transition: all 0.15s ease;
-            z-index: 100;
-        }
+h2{
+color:#FF69B4;
+}
 
-        h1 { font-size: 1.6rem; margin: 0 0 15px 0; }
-        h2 { font-size: 2.2rem; color: #FF69B4; }
+/* หัวใจลอย */
+.heart{
+position:fixed;
+color:#ff4d6d;
+font-size:20px;
+animation:floatUp 3s linear forwards;
+}
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
-        }
-    </style>
+@keyframes floatUp{
+0%{transform:translateY(0);opacity:1;}
+100%{transform:translateY(-600px);opacity:0;}
+}
+
+/* fireworks */
+.firework{
+position:fixed;
+width:6px;
+height:6px;
+border-radius:50%;
+background:red;
+animation:explode 1s ease-out forwards;
+}
+
+@keyframes explode{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(15);opacity:0;}
+}
+</style>
 </head>
+
 <body>
 
-    <div class="container" id="main-box">
-        <div id="page1" class="page active">
-            <h1>บอกชื่อหน่อยย</h1>
-            <input type="text" id="nameInput" placeholder="พิมพ์ชื่อตรงนี้...">
-            <br><br>
-            <button onclick="goToPage(2)">ตกลงค่าบ</button>
-        </div>
+<div class="container" id="main-box">
 
-        <div id="page2" class="page">
-            <h1 id="greeting"></h1>
-            <p>คิดถึงเค้ามั้ย?</p>
-            <div class="btn-group">
-                <button onclick="goToPage(3)">คิดถึงที่สุด!</button>
-                <div style="height: 50px;"></div> <button id="run-btn" ontouchstart="moveButton()" onmouseover="moveButton()">ไม่คิดถึง</button>
-            </div>
-        </div>
+<div id="page1" class="page active">
+<h1>บอกชื่อหน่อยย</h1>
+<input id="nameInput" placeholder="พิมพ์ชื่อ">
+<br><br>
+<button onclick="goToPage(2)">ตกลงค่าบ</button>
+</div>
 
-        <div id="page3" class="page">
-            <h2>จุ๊บๆๆ ❤️</h2>
-            <p style="font-size: 1.5rem;">รักนะค้าบ<br>จู๊บๆๆ</p>
-            <button onclick="location.reload()" style="background: none; color: #9370DB; box-shadow: none;">เล่นอีกรอบ</button>
-        </div>
-    </div>
+<div id="page2" class="page">
+<h1 id="greeting"></h1>
+<p>คิดถึงเค้ามั้ย?</p>
 
-    <script>
-        function goToPage(pageNum) {
-            const name = document.getElementById('nameInput').value;
-            if (pageNum === 2 && name.trim() === "") {
-                alert("ใส่ชื่อก่อนน้า");
-                return;
-            }
-            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
-            document.getElementById('page' + pageNum).classList.add('active');
-            if (pageNum === 2) {
-                document.getElementById('greeting').innerText = "หวัดดี " + name + " ✨";
-            }
-        }
+<button onclick="loveAction()">คิดถึงที่สุด!</button>
 
-        function moveButton() {
-            const btn = document.getElementById('run-btn');
-            const box = document.getElementById('main-box');
-            
-            // สุ่มตำแหน่งให้อยู่ในขอบเขตของกล่อง container
-            const padding = 20;
-            const maxX = box.clientWidth - btn.clientWidth - padding;
-            const maxY = box.clientHeight - btn.clientHeight - padding;
-            
-            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
-            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
-            
-            btn.style.left = randomX + "px";
-            btn.style.top = randomY + "px";
-        }
-    </script>
+<button id="run-btn"
+onmouseover="moveButton()"
+ontouchstart="moveButton()">ไม่คิดถึง</button>
+
+</div>
+
+<div id="page3" class="page">
+<h2>จุ๊บๆๆ ❤️</h2>
+<p style="font-size:22px">รักนะค้าบ<br>จู๊บๆๆ</p>
+
+<button onclick="location.reload()">เล่นอีกรอบ</button>
+</div>
+
+</div>
+
+<script>
+
+function goToPage(n){
+const name=document.getElementById("nameInput").value;
+
+if(n===2 && name.trim()===""){
+alert("ใส่ชื่อก่อนน้า");
+return;
+}
+
+document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+
+document.getElementById("page"+n).classList.add("active");
+
+if(n===2){
+document.getElementById("greeting").innerText="หวัดดี "+name+" ✨";
+}
+}
+
+function moveButton(){
+
+const btn=document.getElementById("run-btn");
+
+const box=document.getElementById("main-box");
+
+const maxX=box.clientWidth-btn.clientWidth;
+const maxY=box.clientHeight-btn.clientHeight;
+
+btn.style.left=Math.random()*maxX+"px";
+btn.style.top=Math.random()*maxY+"px";
+}
+
+function loveAction(){
+
+goToPage(3);
+
+startHearts();
+
+startFireworks();
+
+showLoveMessage();
+}
+
+/* ❤️ หัวใจลอย */
+function startHearts(){
+
+setInterval(()=>{
+
+const heart=document.createElement("div");
+
+heart.className="heart";
+
+heart.innerHTML="❤️";
+
+heart.style.left=Math.random()*window.innerWidth+"px";
+
+heart.style.top=window.innerHeight+"px";
+
+document.body.appendChild(heart);
+
+setTimeout(()=>heart.remove(),3000);
+
+},200);
+
+}
+
+/* 🎆 fireworks */
+
+function startFireworks(){
+
+for(let i=0;i<30;i++){
+
+const f=document.createElement("div");
+
+f.className="firework";
+
+f.style.left=Math.random()*window.innerWidth+"px";
+
+f.style.top=Math.random()*window.innerHeight+"px";
+
+f.style.background="hsl("+Math.random()*360+",100%,50%)";
+
+document.body.appendChild(f);
+
+setTimeout(()=>f.remove(),1000);
+
+}
+
+}
+
+/* 💌 ข้อความรัก */
+
+function showLoveMessage(){
+
+setTimeout(()=>{
+
+alert("เค้ารัก "+document.getElementById("nameInput").value+" ที่สุดเลย ❤️");
+
+},500);
+
+}
+
+</script>
 
 </body>
 </html>
