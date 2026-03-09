@@ -86,23 +86,23 @@ animation:explode 1s ease-out forwards;
 <h1>บอกชื่อหน่อยย</h1>
 <input id="nameInput" placeholder="พิมพ์ชื่อ">
 <br><br>
-<button onclick="goToPage(2)">ตกลงค่าบ</button>
+<button onclick="goToPage(2)">ไปต่อ</button>
 </div>
 
 <div id="page2" class="page">
 <h1 id="greeting"></h1>
-<p>คิดถึงเค้ามั้ย?</p>
+<p>เป็นแฟนกันไหม?</p>
 
-<button onclick="loveAction()">คิดถึงที่สุด!</button>
+<button onclick="loveAction()">เป็น</button>
 
 <button id="run-btn"
 onmouseover="moveButton()"
-ontouchstart="moveButton()">ไม่คิดถึง</button>
+ontouchstart="moveButton()">ไม่เป็น</button>
 
 </div>
 
 <div id="page3" class="page">
-<h2>จุ๊บๆๆ ❤️</h2>
+<h2>❤️</h2>
 <p style="font-size:22px">รักนะค้าบ<br>จู๊บๆๆ</p>
 
 <button onclick="location.reload()">เล่นอีกรอบ</button>
@@ -116,7 +116,7 @@ function goToPage(n){
 const name=document.getElementById("nameInput").value;
 
 if(n===2 && name.trim()===""){
-alert("ใส่ชื่อก่อนน้า");
+alert("บอกชื่อมาน้า");
 return;
 }
 
@@ -124,9 +124,6 @@ document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
 
 document.getElementById("page"+n).classList.add("active");
 
-if(n===2){
-document.getElementById("greeting").innerText="หวัดดี "+name+" ✨";
-}
 }
 
 function moveButton(){
@@ -206,7 +203,7 @@ function showLoveMessage(){
 
 setTimeout(()=>{
 
-alert("เค้ารัก "+document.getElementById("nameInput").value+" ที่สุดเลย ❤️");
+alert("รัก "+document.getElementById("nameInput").value+" นะค้าบ ❤️");
 
 },500);
 
